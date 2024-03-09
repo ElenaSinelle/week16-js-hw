@@ -1,0 +1,107 @@
+@font-face {
+  font-family: "BelTR";
+  src: url("../assets/fonts/BellotaText-Regular.ttf");
+  src: url("../assets/fonts/BellotaText-Regular.eot") format("embedded-opentype"), url("../assets/fonts/BellotaText-Regular.woff2") format("woff2"), url("../assets/fonts/BellotaText-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  background-color: rgb(255, 254, 244);
+  font: normal normal 20px/24px "BelTR", sans-serif;
+  color: rgb(54, 52, 25);
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.form__login, .form__reg {
+  width: 40%;
+  height: fit-content;
+  margin-top: 3rem;
+  padding: 2rem;
+  border: 1px solid rgb(54, 52, 25);
+  border-radius: 0.4rem;
+  position: absolute;
+  left: 30%;
+  background-color: rgb(253, 243, 210);
+  transform: scale(0);
+  transition: all 0.5s ease-in;
+}
+.form__title {
+  line-height: 3rem;
+  align-self: center;
+}
+.form__input-line, .form__change {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.form__input-line input[type=text], .form__input-line input[type=password], .form__input-line input[type=number], .form__input-line input[type=email], .form__input-line select, .form__change input[type=text], .form__change input[type=password], .form__change input[type=number], .form__change input[type=email], .form__change select {
+  flex: 1 0 auto;
+  padding: 0.3rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgb(54, 52, 25);
+  outline: none;
+}
+.form__change {
+  justify-content: space-between;
+}
+.form__change-link, .form__link {
+  color: rgb(53, 126, 4);
+  font-weight: bolder;
+  cursor: pointer;
+}
+.form__link {
+  padding: 0.3rem 2rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgb(54, 52, 25);
+  outline: none;
+  transition: all 0.5s ease-in;
+}
+.form__link:hover {
+  background-color: rgb(71, 96, 54);
+  color: rgb(255, 254, 244);
+}
+.form__link:active {
+  background-color: rgb(140, 190, 106);
+  color: rgb(71, 96, 54);
+  transform: scale(0.95);
+}
+.form .button {
+  border: 1px solid rgb(54, 52, 25);
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  font-weight: bolder;
+  cursor: pointer;
+  background-color: rgb(140, 190, 106);
+  transition: all 0.5s ease-in;
+}
+.form .button .hover {
+  background-color: rgb(71, 96, 54);
+  color: rgb(255, 254, 244);
+}
+.form .button .active {
+  background-color: rgb(255, 254, 244);
+  color: rgb(71, 96, 54);
+  transform: scale(0.95);
+}
+.form__hint,
+.form .keeplogin,
+.form .regConcent {
+  font-size: 1rem;
+}
+.form .error {
+  box-shadow: 0 0 0.1rem 0.15rem rgb(205, 55, 115);
+}
+.form fieldset {
+  border: 1px solid rgb(54, 52, 25);
+  border-radius: 0.4rem;
+}
+
+.active {
+  transform: scale(1);
+}

@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'BelTR';
+  src: url('../assets/fonts/BellotaText-Regular.ttf');
+  src: url('../assets/fonts/BellotaText-Regular.eot') format('embedded-opentype'),
+        url('../assets/fonts/BellotaText-Regular.woff2') format('woff2'),
+        url('../assets/fonts/BellotaText-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+$main-bg: rgb(255, 254, 244);
+$secondary-bg: rgb(140, 190, 106);
+$form-bg:  rgb(253, 243, 210);
+$secondary-bg-hover: rgb(71, 96, 54);
+$main-text: rgb(54, 52, 25);
+$secondary-text: rgb(53, 126, 4);
+$error: rgb(205, 55, 115);
+$transition: all 0.5s ease-in;
+
+body {
+  background-color: $main-bg;
+  font: normal normal 20px/24px 'BelTR', sans-serif;
+  color: $main-text;
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &__login,
+  &__reg {
+    width: 40%;
+    height: fit-content;
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid $main-text;
+    border-radius: 0.4rem;
+    position: absolute;
+    left: 30%;
+    background-color: $form-bg;
+    transform: scale(0);
+    transition: $transition;
+  }
+
+  &__title {
+    line-height: 3rem;
+    align-self: center;
+  }
+
+  &__input-line,
+  &__change {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    & input[type="text"],
+    & input[type="password"],
+    & input[type="number"],
+    & input[type="email"],
+    & select {
+      flex: 1 0 auto;
+      padding: 0.3rem;
+      border-radius: 0.4rem;
+      border: 1px solid $main-text;
+      outline: none;
+    }
+  }
+
+  &__change {
+    justify-content: space-between;
+  }
+
+  &__change-link,
+  &__link {
+    color: $secondary-text;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+  &__link {
+    padding: 0.3rem 2rem;
+    border-radius: 0.4rem;
+    border: 1px solid $main-text;
+    outline: none;
+    transition: $transition;
+
+    &:hover {
+      background-color: $secondary-bg-hover;
+      color: $main-bg;
+    }
+
+    &:active {
+      background-color: $secondary-bg;
+      color: $secondary-bg-hover;
+      transform: scale(0.95);
+    }
+  }
+
+  .button {
+    border: 1px solid $main-text;
+    border-radius: 0.4rem;
+    padding: 0.5rem;
+    font-weight: bolder;
+    cursor: pointer;
+    background-color: $secondary-bg;
+    transition: $transition;
+
+    .hover {
+      background-color: $secondary-bg-hover;
+      color: $main-bg;
+    }
+
+    .active {
+      background-color: $main-bg;
+      color: $secondary-bg-hover;
+      transform: scale(0.95);
+    }
+  }
+
+  &__hint,
+  .keeplogin,
+  .regConcent {
+    font-size: 1rem;
+  }
+
+  .error {
+    box-shadow: 0 0 0.1rem 0.15rem $error;
+  }
+
+  fieldset {
+    border: 1px solid $main-text;
+    border-radius: 0.4rem;
+  }
+}
+
+//animation
+
+.active {
+  transform: scale(1);
+}

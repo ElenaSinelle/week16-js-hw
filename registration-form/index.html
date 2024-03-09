@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Форма регистрации</title>
+		<link rel="stylesheet" href="style/normalize.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" href="assets/img/paw-print.png" type="png">
+	</head>
+	<body>
+
+    <!-- -----------------login form --------------------- -->
+
+    <div class="login">
+      <form action="#" name="loginForm" class="form form__login active" novalidate>
+        <h1 class="form__title">Добро пожаловать!</h1>
+
+        <div class="form__input-line">
+          <label for="email">Ваш e-mail</label>
+          <input id="email" name="email" type="email" placeholder="your-email@mail.com" class="_req">
+        </div>
+
+        <div class="form__input-line">
+          <label for="password">Ваш пароль</label>
+          <input id="password" name="password" type="password" placeholder="Ваш пароль" class="_req">
+        </div>
+
+        <div class="form__hint">Пароль должен содержать как минимум одну заглавную латинскую букву, одну строчную латинскую букву и одну цифру</div>
+
+        <button class="button form__submit-btn" name="loginSubmitBtn" type="submit">Войти</button>
+
+        <div class="form__input-line">
+          <input type="checkbox" name="keeplogin" id="keeplogin" value="keeplogin">
+          <label for="keeplogin" class="keeplogin">Запомнить меня</label>
+        </div>
+
+        <div class="form__change">
+          <span class="form__change-link">Вы не зарегистрированы?</span>
+          <span class="form__link toReg">Регистрация</span>
+        </div>
+
+			</form>
+		</div>
+
+    <!-- -----------------registration form --------------------- -->
+
+    <div class="reg">
+      <form action="#" name="regForm" class="form form__reg" novalidate>
+        <h1 class="form__title">Регистрация</h1>
+
+        <div class="form__input-line">
+          <label for="username">Ваше имя</label>
+          <input id="username" name="username" type="text" placeholder="Ваше имя" class="_req">
+				</div>
+
+        <div class="form__input-line">
+          <label for="emailReg">Ваш e-mail</label>
+          <input id="emailReg" name="emailReg" type="email" placeholder="your-email@mail.com" class="_req">
+        </div>
+
+        <div class="form__input-line">
+          <label for="age">Ваш возраст</label>
+          <input id="age" name="age" type="number" placeholder="18" class="_req">
+        </div>
+
+        <fieldset class="form__input-line">
+          <legend>Ваш пол</legend>
+          <input id="female" name="gender" type="radio" value="Женщина" checked><label for="female"> Женщина</label>
+          <input id="male" name="gender" type="radio" value="Мужчина"><label for="male"> Мужчина</label>
+				</fieldset>
+
+        <div class="form__input-line">
+          <label for="profession">Ваша профессия:</label>
+          <select id="profession" name="profession" class="_req">
+            <option value="" selected></option>
+            <option value="Врач">Врач</option>
+            <option value="Программист">Программист</option>
+            <option value="Учитель">Учитель</option>
+            <option value="Дизайнер">Дизайнер</option>
+            <option value="Инженер">Инженер</option>
+            <option value="Продавец">Продавец</option>
+            <option value="Другое">Другое</option>
+          </select>
+        </div>
+
+        <div class="form__input-line">
+          <label for="passwordReg"> Ваш пароль</label>
+          <input id="passwordReg" name="passwordReg" type="password" placeholder="ваш пароль" class="_req">
+        </div>
+
+        <div class="form__hint">Пароль должен содержать как минимум одну заглавную латинскую букву, одну строчную латинскую букву и одну цифру</div>
+
+        <button class="button form__submit-btn" name="regSubmitBtn" type="submit">Регистрация</button>
+
+        <div class="form__input-line">
+          <input type="checkbox" name="regConcent" value="regConcent">
+          <label for="regConcent" class="regConcent">Я согласна(согласен) на обработку данных</label>
+        </div>
+
+        <div class="form__change">
+          <span class="form__change-link">Вы уже зарегистрированы?</span>
+          <span class="form__link toLogin">Войдите на сайт</span>
+        </div>
+
+			</form>
+    </div>
+
+    <script src="script.js"></script>
+	</body>
+</html>
