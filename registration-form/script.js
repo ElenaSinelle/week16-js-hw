@@ -169,16 +169,17 @@ function controlSubmit(form) {
 
   let inputCount = 0;
   formInputs.forEach(input => {
-    if(input.value !== '' || input.checked || input.selected) {
+    if(input.value !== '' || input.checked === true ) {
       inputCount++;
       console.log(input);
     }
   });
   console.log(inputCount);
+  //if formInputs.length == inputCount => submit button enabled, otherwise - disabled
 }
 
 loginForm.addEventListener('change', function(){
-
+  controlSubmit(loginForm);
 })
 
 regForm.addEventListener('change', function(){
