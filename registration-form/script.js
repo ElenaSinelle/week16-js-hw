@@ -32,6 +32,7 @@ regForm.addEventListener('submit', function(event) {
 
 });
 
+
 //sending form
 async function formSend(event, form) {
   event.preventDefault();
@@ -115,7 +116,7 @@ function formValidate(form) {
         alert('Введите ваш возраст');
         error++;
       } else if (input.value < 18) {
-        formAddError(input);
+        formAddError(input);e
         alert('Вам ещё нет 18 лет, вам сюда нельзя(');
         error++;
       }
@@ -132,6 +133,7 @@ function formValidate(form) {
   return error;
 }
 
+//checking functions
 function testEmail(email) {
   const regexp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   return regexp.test(email);
@@ -147,6 +149,7 @@ function testName(name) {
   return regexp.test(name);
 }
 
+//add class functions
 function formAddError(input) {
   input.classList.add('error');
 }
@@ -155,18 +158,34 @@ function formRemoveError(input) {
   input.classList.remove('error');
 }
 
+//controlling submit
+function controlSubmit(form) {
+  let formInputs;
+  if (form === loginForm) {
+    formInputs = Array.from(document.querySelectorAll('._req')).slice(0, 2);
+  } else if (form === regForm) {
+    formInputs = [...Array.from(document.querySelectorAll('._req')).slice(2), document.getElementById('regConcent')];
+  }
 
-// function controlSubmit(form) {
-//   let submitBtn;
-//   if (form === loginForm) {
-//     submitBtn = document.loginForm.loginSubmitBtn;
-//   } else if (form === regForm) {
-//     submitBtn = document.regForm.regSubmitBtn;
-//   }
+  let inputCount = 0;
+  formInputs.forEach(input => {
+    if(input.value !== '' || input.checked || input.selected) {
+      inputCount++;
+      console.log(input);
+    }
+  });
+  console.log(inputCount);
+}
 
-//   let error = formValidate(form);
+loginForm.addEventListener('change', function(){
 
-//   if (error) {
+})
+
+regForm.addEventListener('change', function(){
+  controlSubmit(regForm);
+})
+
+
 //     submitBtn.setAttribute('disabled', true);
 //     submitBtn.classList.remove('.hover');
 //     submitBtn.classList.remove('.active');
@@ -174,6 +193,3 @@ function formRemoveError(input) {
 //     submitBtn.removeAttribute('disabled');
 //     submitBtn.classList.add('.hover');
 //     submitBtn.classList.add('.active');
-//   }
-
-// }
