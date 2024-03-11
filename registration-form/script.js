@@ -32,6 +32,7 @@ let inputs = [...document.querySelectorAll('input'), document.querySelector('sel
 inputs.forEach(input => {
   input.addEventListener('focus', function() {
     input.classList.add('focus');
+    formRemoveError(input);
   })
 });
 
