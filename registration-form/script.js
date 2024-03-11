@@ -1,139 +1,170 @@
-'use strict'
-//switching forms
+'use strict';
 
+const loginForm = document.forms.loginForm;
+const regForm = document.forms.regForm;
+const submitBtns = document.querySelectorAll('.form__submit-btn');
+
+//disabling submit button of first form on load
+loginForm.addEventListener('DOMContentLoaded', controlSubmit(loginForm));
+
+//switching between forms
 const toRegBtn = document.querySelector('.toReg');
 const toLoginBtn = document.querySelector('.toLogin');
-const regForm = document.forms.regForm;
-const loginForm = document.forms.loginForm;
 
-toRegBtn.addEventListener('click', function() {
+toRegBtn.addEventListener('click', function () {
   toggleForms(loginForm, regForm);
 });
 
-toLoginBtn.addEventListener('click', function() {
+toLoginBtn.addEventListener('click', function () {
   toggleForms(regForm, loginForm);
 });
 
 function toggleForms(formToHide, formToShow) {
   formToHide.classList.remove('active');
   formToShow.classList.add('active');
+  controlSubmit(formToShow);
 }
 
+//----------------------------------------------------------------
 
-//validation and sending forms
-//listeners
-loginForm.addEventListener('submit', function(event) {
-  formSend(event, loginForm);
-
+//listeners on focus / blur
+let inputs = [...document.querySelectorAll('input'), document.querySelector('select')];
+inputs.forEach(input => {
+  input.addEventListener('focus', function() {
+    input.classList.add('focus');
+  })
 });
 
-regForm.addEventListener('submit', function(event) {
-  formSend(event, regForm);
+inputs.forEach(input => {
+  input.addEventListener('blur', function() {
+    input.classList.remove('focus');
+  })
+})
 
-});
+//----------------------------------------------------------------
 
+//controlling submit
+function controlSubmit(form) {
+  let formInputs = Array.from(form.querySelectorAll('._req'));
 
-//sending form
-async function formSend(event, form) {
-  event.preventDefault();
+  let isValid = true;
 
-  let error = formValidate(form);
-  let formData = new FormData(form);
-
-  if(error === 0) {
-    let response = await fetch('sendmail.php', {
-      method: 'POST',
-      body: formData
-    });
-
-    if(response.ok) {
-      let result = await response.json();
-      alert(result.message);
-      form.reset();
-
-    } else {
-      alert('Всё отлично! Но вы не подключились к серверу)');
+  formInputs.forEach(input => {
+    if (!validateInput(input)) {
+      isValid = false;
     }
+  });
+
+  if(form === regForm) {
+    const checkBox = form.querySelector('input[name="regConcent"]');
+    if (!checkBox.checked) {
+      isValid = false;
+    }
+  }
+
+  submitBtns.forEach(btn => {
+    btn.disabled = !isValid;
+  });
+}
+
+// checking if input is empty / unchecked
+function validateInput(input) {
+  if (input.value.trim() === '') {
+    showError(input, 'Это поле обязательно для заполнения');
+    return false;
   } else {
-    alert ('Заполните обязательные поля');
+    clearError(input);
+    return true;
   }
 }
 
-//validation
+// Show error message next to input
+function showError(input, message) {
+  const errorEl = input.parentElement.querySelector('.form__error');
+  if (errorEl) {
+    errorEl.textContent = message;
+  } else {
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('form__error');
+    errorDiv.textContent = message;
+    input.parentElement.appendChild(errorDiv);
+  }
+}
+
+// Clear error message
+function clearError(input) {
+  const errorEl = input.parentElement.querySelector('.form__error');
+  if (errorEl) {
+    errorEl.remove();
+  }
+}
+
+// listeners on change
+loginForm.addEventListener('change', function () {
+  controlSubmit(loginForm);
+});
+
+regForm.addEventListener('change', function () {
+  controlSubmit(regForm);
+});
+
+//-----------------------------------------------------------
+
+//extended validation
 function formValidate(form) {
-  let error = 0;
+let isValid = true;
 
-  let formReq;
-  if (form === loginForm) {
-    formReq = Array.from(document.querySelectorAll('._req')).slice(0, 2);
-  } else if (form === regForm) {
-    formReq = Array.from(document.querySelectorAll('._req')).slice(2);
-  }
+let formInputs = Array.from(form.querySelectorAll('._req'));
 
-  for (let index = 0; index < formReq.length; index++) {
-    const input = formReq[index];
-    formRemoveError(input);
+formInputs.forEach(input => {
+  formRemoveError(input);
+  clearError(input);
 
-    if (input.type === 'email') {
-      if (input.value === '') {
-        alert('Введите email');
-        formAddError(input);
-        error++;
-      } else if (!testEmail(input.value)) {
-        formAddError(input);
-        alert('Неправильно заполнено поле email');
-        error++;
-      }
-    }
-
-    if (input.type === 'password') {
-      if (input.value === '') {
-        formAddError(input);
-        alert('Введите пароль');
-        error++;
-      } else if (!testPassword(input.value)) {
-        formAddError(input);
-        alert('Неправильно введён пароль');
-        error++;
-      }
-    }
-
-    if (input.id === 'username') {
-      if (input.value === '') {
-        formAddError(input);
-        alert('Введите ваше имя');
-        error++;
-      } else if (!testName(input.value)) {
-        formAddError(input);
-        alert('Слишком короткое имя');
-        error++;
-      }
-    }
-
-    if (input.id === 'age') {
-      if (input.value === '') {
-        formAddError(input);
-        alert('Введите ваш возраст');
-        error++;
-      } else if (input.value < 18) {
-        formAddError(input);e
-        alert('Вам ещё нет 18 лет, вам сюда нельзя(');
-        error++;
-      }
-    }
-
-    if (input.id === 'profession') {
-      if (input.value === '') {
-        formAddError(input);
-        alert('Укажите вашу профессию');
-        error++;
-      }
+  if (input.type === 'email') {
+    if (!testEmail(input.value)) {
+      formAddError(input);
+      showError(input, 'Неправильно заполнено поле email');
+      isValid = false;
     }
   }
-  return error;
+
+  if (input.type === 'password') {
+    if (!testPassword(input.value)) {
+      formAddError(input);
+      showError(input, 'Неправильно введён пароль');
+      isValid = false;
+    }
+  }
+
+  if (input.id === 'username') {
+    if (!testName(input.value)) {
+      formAddError(input);
+      showError(input, 'Слишком короткое имя');
+      isValid = false;
+    }
+  }
+
+  if (input.id === 'age') {
+    if (input.value < 18) {
+      formAddError(input);
+      showError(input, 'Вам ещё нет 18 лет, вам сюда нельзя(');
+      isValid = false;
+    }
+  }
+
+  if (input.id === 'profession') {
+    if (input.value === '') {
+      formAddError(input);
+      showError(input, 'Укажите вашу профессию');
+      isValid = false;
+    }
+  }
+  });
+
+  return isValid;
 }
 
-//checking functions
+//functions for inputs validation
 function testEmail(email) {
   const regexp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   return regexp.test(email);
@@ -149,7 +180,7 @@ function testName(name) {
   return regexp.test(name);
 }
 
-//add class functions
+//add / remove error class functions
 function formAddError(input) {
   input.classList.add('error');
 }
@@ -158,39 +189,43 @@ function formRemoveError(input) {
   input.classList.remove('error');
 }
 
-//controlling submit
-function controlSubmit(form) {
-  let formInputs;
-  if (form === loginForm) {
-    formInputs = Array.from(document.querySelectorAll('._req')).slice(0, 2);
-  } else if (form === regForm) {
-    formInputs = [...Array.from(document.querySelectorAll('._req')).slice(2), document.getElementById('regConcent')];
-  }
+//----------------------------------------------------------------------
 
-  let inputCount = 0;
-  formInputs.forEach(input => {
-    if(input.value !== '' || input.checked === true ) {
-      inputCount++;
-      console.log(input);
+//validation and sending forms
+//function sending form
+async function formSend(event, form) {
+  event.preventDefault();
+
+  let error = formValidate(form);
+
+  let formData = new FormData(form);
+
+  if(error) {
+    let response = await fetch('sendmail.php', {
+      method: 'POST',
+      body: formData
+    });
+
+    if(response.ok) {
+      let result = await response.json();
+      alert(result.message);
+      form.reset();
+
+    } else {
+      alert('Всё отлично! Но вы не подключились к серверу)');
     }
-  });
-  console.log(inputCount);
-  //if formInputs.length == inputCount => submit button enabled, otherwise - disabled
+  } else {
+    alert ('Некоторые поля заполнены неправильно');
+  }
 }
 
-loginForm.addEventListener('change', function(){
-  controlSubmit(loginForm);
-})
+//listeners of submit
+loginForm.addEventListener('submit', function(event) {
+  formSend(event, loginForm);
 
-regForm.addEventListener('change', function(){
-  controlSubmit(regForm);
-})
+});
 
+regForm.addEventListener('submit', function(event) {
+  formSend(event, regForm);
 
-//     submitBtn.setAttribute('disabled', true);
-//     submitBtn.classList.remove('.hover');
-//     submitBtn.classList.remove('.active');
-//   } else {
-//     submitBtn.removeAttribute('disabled');
-//     submitBtn.classList.add('.hover');
-//     submitBtn.classList.add('.active');
+});

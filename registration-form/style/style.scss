@@ -15,6 +15,7 @@ $secondary-bg-hover: rgb(71, 96, 54);
 $main-text: rgb(54, 52, 25);
 $secondary-text: rgb(53, 126, 4);
 $error: rgb(205, 55, 115);
+$focus: rgb(127, 191, 82);
 $transition: all 0.5s ease-in;
 
 body {
@@ -32,14 +33,14 @@ body {
 
   &__login,
   &__reg {
-    width: 40%;
+    width: 50%;
     height: fit-content;
     margin-top: 3rem;
     padding: 2rem;
     border: 1px solid $main-text;
     border-radius: 0.4rem;
     position: absolute;
-    left: 30%;
+    left: 25%;
     background-color: $form-bg;
     transform: scale(0);
     transition: $transition;
@@ -126,13 +127,21 @@ body {
     font-size: 1rem;
   }
 
+  fieldset {
+    border: 1px solid $main-text;
+    border-radius: 0.4rem;
+  }
+
   .error {
     box-shadow: 0 0 0.1rem 0.15rem $error;
   }
 
-  fieldset {
-    border: 1px solid $main-text;
-    border-radius: 0.4rem;
+  &__error {
+    font-size: 0.8rem;
+  }
+
+  .focus {
+    box-shadow: 0 0 0.1rem 0.15rem $focus;
   }
 }
 
