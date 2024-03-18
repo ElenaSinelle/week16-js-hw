@@ -1,5 +1,7 @@
 'use strict';
 
+document.addEventListener('DOMContentLoaded', () => {
+
 const loginForm = document.forms.loginForm;
 const regForm = document.forms.regForm;
 const submitBtns = document.querySelectorAll('.form__submit-btn');
@@ -223,10 +225,9 @@ async function formSend(event, form) {
 //listeners of submit
 loginForm.addEventListener('submit', function(event) {
   formSend(event, loginForm);
-
 });
 
 regForm.addEventListener('submit', function(event) {
   formSend(event, regForm);
-
+});
 });
